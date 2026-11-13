@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f766e">
+<title>نضارة | صيدلية العناية بالبشرة والشعر</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f8f7; --card:#ffffff; --ink:#12302d; --muted:#6b807d; --line:#e3ebe9;
+  --brand:#0f766e; --brand2:#14b8a6; --soft:#e6f6f3; --accent:#e11d74; --gold:#f59e0b;
+  --danger:#dc2626; --warn:#d97706; --ok:#16a34a; --shadow:0 6px 20px rgba(15,70,64,.08);
+}
+:root[data-theme="dark"]{
+  --bg:#0d1514; --card:#15211f; --ink:#e8f3f1; --muted:#8fa7a3; --line:#233633;
+  --brand:#2dd4bf; --brand2:#14b8a6; --soft:#143531; --shadow:0 6px 20px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Cairo',system-ui,-apple-system,'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select,textarea{font-family:inherit;color:var(--ink)}
+#app{max-width:520px;margin:0 auto;min-height:100%;position:relative;padding-bottom:84px}
+header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);padding:calc(10px + env(safe-area-inset-top)) 16px 10px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line)}
+header.top h1{font-size:19px;font-weight:800;flex:1}
+.logo{display:flex;align-items:center;gap:8px;flex:1}
+.logo b{font-size:21px;font-weight:800;color:var(--brand)}
+.logo i{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;color:#fff;font-style:normal;font-size:17px}
+.icon-btn{width:38px;height:38px;border-radius:12px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;font-size:17px;position:relative}
+.badge{position:absolute;top:-5px;left:-5px;min-width:18px;height:18px;border-radius:9px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;padding:0 4px}
+main{padding:14px 16px}
+.view{display:none;animation:fade .25s ease}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.search{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:0 14px;height:48px}
+.search input{flex:1;border:none;outline:none;background:transparent;font-size:15px;height:100%}
+.hero{margin-top:14px;border-radius:24px;padding:22px 20px;background:linear-gradient(135deg,#0f766e 0%,#14b8a6 55%,#5eead4 100%);color:#fff;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.hero::after{content:"";position:absolute;width:190px;height:190px;border-radius:50%;background:rgba(255,255,255,.14);left:-50px;bottom:-70px}
+.hero::before{content:"";position:absolute;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.12);left:70px;top:-40px}
+.hero h2{font-size:22px;font-weight:800;line-height:1.5;position:relative}
+.hero p{font-size:13.5px;opacity:.95;margin:6px 0 14px;position:relative;line-height:1.7}
+.btn{background:var(--brand);color:#fff;border-radius:14px;padding:12px 18px;font-weight:700;font-size:14.5px;display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:transform .1s}
+.btn:active{transform:scale(.97)}
+.btn.light{background:#fff;color:#0f766e;position:relative}
+.btn.ghost{background:var(--soft);color:var(--brand)}
+.btn.block{width:100%}
+.btn.danger{background:#fee2e2;color:var(--danger)}
+.sec-title{display:flex;justify-content:space-between;align-items:center;margin:22px 0 10px}
+.sec-title h3{font-size:17px;font-weight:800}
+.sec-title a{font-size:13px;color:var(--brand);font-weight:700;cursor:pointer}
+.cats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.cat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:10px 4px;text-align:center;font-size:12px;font-weight:700}
+.cat span{display:block;font-size:24px;margin-bottom:2px}
+.hscroll{display:flex;gap:12px;overflow-x:auto;padding:2px 2px 10px;scroll-snap-type:x mandatory;scrollbar-width:none}
+.hscroll::-webkit-scrollbar{display:none}
+.hscroll .pcard{min-width:158px;max-width:158px;scroll-snap-align:start}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pcard{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;position:relative}
+.pimg{height:130px;display:grid;place-items:center;position:relative;cursor:pointer}
+.tag{position:absolute;top:8px;right:8px;background:var(--accent);color:#fff;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:8px}
+.fav{position:absolute;top:6px;left:6px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.85);display:grid;place-items:center;font-size:16px;color:#888}
+.fav.on{color:var(--accent)}
+.pbody{padding:10px 12px 12px;display:flex;flex-direction:column;gap:3px;flex:1}
+.pbrand{font-size:11px;color:var(--muted)}
+.pname{font-size:13.5px;font-weight:700;line-height:1.45;min-height:39px;cursor:pointer}
+.rate{font-size:12px;color:var(--gold);font-weight:700}
+.rate small{color:var(--muted);font-weight:400}
+.price{display:flex;align-items:baseline;gap:6px;margin-top:2px}
+.price b{font-size:14.5px;color:var(--brand);font-weight:800}
+.price s{font-size:11px;color:var(--muted)}
+.add{margin-top:8px;background:var(--soft);color:var(--brand);border-radius:12px;padding:8px;font-weight:700;font-size:13px}
+.add:active{background:var(--brand);color:#fff}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:12px 0 6px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{white-space:nowrap;padding:8px 14px;border-radius:20px;background:var(--card);border:1px solid var(--line);font-size:13px;font-weight:700}
+.chip.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+.toolbar{display:flex;gap:8px;align-items:center;margin:6px 0 12px;font-size:13px;color:var(--muted)}
+.toolbar select{margin-right:auto;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 8px;font-size:13px}
+.tips{display:flex;flex-direction:column;gap:10px}
+.tip{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px;align-items:center}
+.tip i{font-style:normal;font-size:26px;width:46px;height:46px;border-radius:14px;background:var(--soft);display:grid;place-items:center;flex-shrink:0}
+.tip b{font-size:14px}
+.tip p{font-size:12.5px;color:var(--muted);line-height:1.6}
+.banner{background:linear-gradient(135deg,#fdf2f8,#fce7f3);border-radius:20px;padding:16px;display:flex;gap:12px;align-items:center;margin-top:20px;color:#831843}
+:root[data-theme="dark"] .banner{background:linear-gradient(135deg,#3b1630,#2a1226);color:#fbcfe8}
+.banner i{font-style:normal;font-size:34px}
+.banner b{font-size:15px}.banner p{font-size:12.5px;opacity:.85;margin-top:2px}
+/* sheet */
+#overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:50;opacity:0;pointer-events:none;transition:opacity .25s}
+#overlay.show{opacity:1;pointer-events:auto}
+#sheet{position:fixed;bottom:0;left:50%;transform:translate(-50%,100%);width:100%;max-width:520px;max-height:90vh;overflow-y:auto;background:var(--card);border-radius:26px 26px 0 0;z-index:60;transition:transform .3s cubic-bezier(.2,.8,.2,1);padding:10px 18px calc(24px + env(safe-area-inset-bottom))}
+#sheet.show{transform:translate(-50%,0)}
+.grab{width:44px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 12px}
+.sheet-img{height:190px;border-radius:20px;display:grid;place-items:center;margin-bottom:12px}
+.sheet h2{font-size:19px;font-weight:800;line-height:1.5}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.meta span{background:var(--soft);color:var(--brand);font-size:12px;font-weight:700;padding:4px 10px;border-radius:10px}
+.sheet h4{margin:14px 0 4px;font-size:14px;font-weight:800}
+.sheet p,.sheet li{font-size:13.5px;line-height:1.8;color:var(--muted)}
+.sheet ul{padding-right:18px}
+.qty{display:flex;align-items:center;gap:10px;background:var(--soft);border-radius:12px;padding:3px}
+.qty button{width:30px;height:30px;border-radius:9px;background:var(--card);font-size:18px;font-weight:700;color:var(--brand)}
+.qty b{min-width:20px;text-align:center}
+.sheet-foot{display:flex;gap:10px;margin-top:18px;align-items:center}
+.sheet-foot .btn{flex:1}
+/* cart */
+.citem{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:10px;margin-bottom:10px;align-items:center}
+.cthumb{width:70px;height:70px;border-radius:14px;display:grid;place-items:center;flex-shrink:0}
+.cinfo{flex:1;min-width:0}
+.cinfo b{font-size:13.5px;display:block;line-height:1.4}
+.cinfo small{color:var(--brand);font-weight:800;font-size:13.5px}
+.summary{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px;margin-top:14px}
+.row{display:flex;justify-content:space-between;font-size:14px;padding:5px 0;color:var(--muted)}
+.row.total{color:var(--ink);font-weight:800;font-size:17px;border-top:1px dashed var(--line);margin-top:6px;padding-top:12px}
+.coupon{display:flex;gap:8px;margin-top:12px}
+.coupon input,.field input,.field textarea,.field select{flex:1;width:100%;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:11px 12px;font-size:14px;outline:none}
+.coupon input:focus,.field input:focus,.field textarea:focus{border-color:var(--brand)}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:5px}
+.empty{text-align:center;padding:50px 20px;color:var(--muted)}
+.empty i{font-style:normal;font-size:54px;display:block;margin-bottom:10px}
+/* quiz */
+.qcard{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:var(--shadow)}
+.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:16px}
+.progress div{height:100%;background:linear-gradient(90deg,var(--brand),var(--brand2));transition:width .3s}
+.qcard h3{font-size:17px;line-height:1.6;margin-bottom:14px}
+.opt{display:block;width:100%;text-align:right;background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:13px 14px;font-size:14px;font-weight:600;margin-bottom:9px;transition:.15s}
+.opt:active,.opt.sel{border-color:var(--brand);background:var(--soft);color:var(--brand)}
+.result-top{text-align:center;padding:10px 0 4px}
+.result-top .big{font-size:50px}
+.result-top h2{font-size:21px;font-weight:800;margin:4px 0}
+.result-top p{font-size:13.5px;color:var(--muted);line-height:1.8}
+.routine{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px;margin-top:14px}
+.routine h4{font-size:15px;margin-bottom:8px}
+.step{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:13.5px}
+.step:last-child{border:none}
+.step em{width:26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;font-style:normal;font-size:12px;font-weight:700;display:grid;place-items:center;flex-shrink:0}
+.step div{flex:1}.step small{color:var(--muted);display:block;font-size:12px}
+.step button{color:var(--brand);font-weight:700;font-size:12.5px;background:var(--soft);padding:5px 10px;border-radius:9px}
+/* menu list */
+.menu{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.mi{display:flex;align-items:center;gap:12px;width:100%;padding:14px 16px;text-align:right;border-bottom:1px solid var(--line);font-size:14.5px;font-weight:700}
+.mi:last-child{border:none}
+.mi i{font-style:normal;font-size:20px;width:36px;height:36px;border-radius:11px;background:var(--soft);display:grid;place-items:center}
+.mi span{flex:1}.mi small{color:var(--muted);font-weight:600}
+.acc{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:10px;overflow:hidden}
+.acc button{width:100%;padding:14px;display:flex;justify-content:space-between;font-weight:800;font-size:14.5px;text-align:right}
+.acc div{max-height:0;overflow:hidden;transition:max-height .3s;padding:0 14px;font-size:13.5px;color:var(--muted);line-height:1.85}
+.acc.open div{max-height:420px;padding:0 14px 14px}
+.acc.open button .ar{transform:rotate(180deg)}
+.ar{transition:.2s}
+.combo-res{margin-top:14px;border-radius:18px;padding:16px;font-size:14px;line-height:1.8;border:1.5px solid}
+.combo-res.ok{background:#dcfce7;border-color:#86efac;color:#14532d}
+.combo-res.caution{background:#fef3c7;border-color:#fcd34d;color:#78350f}
+.combo-res.avoid{background:#fee2e2;border-color:#fca5a5;color:#7f1d1d}
+.combo-res b{font-size:16px;display:block;margin-bottom:4px}
+.order{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:10px}
+.order .h{display:flex;justify-content:space-between;font-weight:800;font-size:14px}
+.order .st{font-size:12px;background:var(--soft);color:var(--brand);padding:3px 10px;border-radius:9px}
+.order p{font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.7}
+.disc{font-size:11.5px;color:var(--muted);text-align:center;line-height:1.8;margin:26px 8px 6px}
+/* nav */
+nav.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;background:color-mix(in srgb,var(--card) 92%,transparent);backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;z-index:30;padding:6px 6px calc(6px + env(safe-area-inset-bottom))}
+nav.bottom button{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 0;font-size:11px;font-weight:700;color:var(--muted);border-radius:14px;position:relative}
+nav.bottom button span{font-size:21px;filter:grayscale(1);opacity:.7;transition:.2s}
+nav.bottom button.on{color:var(--brand)}
+nav.bottom button.on span{filter:none;opacity:1;transform:translateY(-2px)}
+nav.bottom .badge{top:0;left:50%;margin-left:-22px}
+#toast{position:fixed;bottom:100px;left:50%;transform:translate(-50%,20px);background:#12302d;color:#fff;padding:11px 18px;border-radius:14px;font-size:13.5px;font-weight:600;z-index:80;opacity:0;pointer-events:none;transition:.3s;max-width:90%;text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+.success{text-align:center;padding:14px 4px}
+.success .big{font-size:60px}
+.success h2{margin:6px 0}
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="top" id="topbar"></header>
+  <main>
+    <section class="view" id="v-home"></section>
+    <section class="view" id="v-shop"></section>
+    <section class="view" id="v-quiz"></section>
+    <section class="view" id="v-cart"></section>
+    <section class="view" id="v-more"></section>
+    <section class="view" id="v-favs"></section>
+    <section class="view" id="v-orders"></section>
+    <section class="view" id="v-guide"></section>
+    <section class="view" id="v-combo"></section>
+  </main>
+  <nav class="bottom" id="nav">
+    <button data-v="home"><span>🏠</span>الرئيسية</button>
+    <button data-v="shop"><span>🛍️</span>المتجر</button>
+    <button data-v="quiz"><span>✨</span>تحليل البشرة</button>
+    <button data-v="cart"><span>🛒</span>السلة<i class="badge" id="navBadge" style="display:none">0</i></button>
+    <button data-v="more"><span>☰</span>المزيد</button>
+  </nav>
+</div>
+<div id="overlay"></div>
+<div id="sheet" class="sheet"></div>
+<div id="toast"></div>
+
+<script>
+/* ============ البيانات ============ */
+const CATS=[
+ {id:'skin',name:'البشرة',ic:'🧴'},
+ {id:'hair',name:'الشعر',ic:'💇‍♀️'},
+ {id:'makeup',name:'التجميل',ic:'💄'},
+ {id:'sun',name:'واقي الشمس',ic:'☀️'},
+ {id:'body',name:'الجسم',ic:'🧼'}
+];
+const ALL=['dry','oily','combo','normal','sensitive'];
+const TYPE_NAME={dry:'جافة',oily:'دهنية',combo:'مختلطة',normal:'عادية',sensitive:'حساسة'};
+const P=[
+ {id:1,name:'سيروم فيتامين C 15% لتفتيح البقع',brand:'ديرما لايف',cat:'skin',role:'treatment',time:'صباحاً',price:28000,old:35000,rate:4.8,rv:312,size:'30 مل',color:'#f59e0b',shape:'dropper',tag:'الأكثر مبيعاً',types:['normal','dry','combo','oily'],concerns:['spots','dull'],ing:['فيتامين C (L-أسكوربيك 15%)','حمض الفيروليك','فيتامين E'],use:'ضعي 3-4 قطرات على بشرة نظيفة وجافة صباحاً قبل المرطب، ثم واقي الشمس دائماً.',desc:'سيروم مضاد للأكسدة يساعد على توحيد لون البشرة وتفتيح آثار البقع وإضفاء إشراقة.'},
+ {id:2,name:'غسول لطيف بالسيراميد',brand:'ديرما لايف',cat:'skin',role:'cleanser',price:12000,rate:4.7,rv:540,size:'200 مل',color:'#38bdf8',shape:'tube',types:['dry','sensitive','normal'],concerns:['dryness','sensitive'],ing:['سيراميد NP','غليسيرين','بانثينول'],use:'دلّكي كمية صغيرة على وجه مبلل بلطف ثم اشطفي بماء فاتر، صباحاً ومساءً.',desc:'غسول كريمي خالٍ من الصابون ينظف دون أن يجرّد البشرة من رطوبتها.'},
+ {id:3,name:'جل غسول بحمض الساليسيليك 2%',brand:'كلير سكين',cat:'skin',role:'cleanser',price:13500,rate:4.6,rv:287,size:'150 مل',color:'#22c55e',shape:'tube',types:['oily','combo'],concerns:['acne','pores'],ing:['حمض الساليسيليك 2%','زنك PCA','خلاصة الشاي الأخضر'],use:'استخدميه مرة إلى مرتين يومياً على وجه مبلل، ودلّكي 30 ثانية قبل الشطف.',desc:'ينظف المسام بعمق ويقلل اللمعان والحبوب دون جفاف مبالغ فيه.'},
+ {id:4,name:'كريم مرطب بحمض الهيالورونيك',brand:'ديرما لايف',cat:'skin',role:'moisturizer',price:18000,rate:4.8,rv:421,size:'50 مل',color:'#a78bfa',shape:'jar',tag:'جديد',types:['dry','normal','combo'],concerns:['dryness','wrinkles'],ing:['حمض الهيالورونيك','سكوالين','سيراميد','فيتامين B5'],use:'ضعيه صباحاً ومساءً على الوجه والرقبة بعد السيروم.',desc:'ترطيب عميق يدوم 24 ساعة بملمس مريح غير دهني.'},
+ {id:5,name:'جل مرطب خفيف للبشرة الدهنية',brand:'كلير سكين',cat:'skin',role:'moisturizer',price:16000,rate:4.5,rv:198,size:'50 مل',color:'#2dd4bf',shape:'jar',types:['oily','combo'],concerns:['acne','pores'],ing:['حمض الهيالورونيك','نياسيناميد 2%','الصبار'],use:'طبقة رقيقة صباحاً ومساءً بعد التنظيف والسيروم.',desc:'ترطيب مائي سريع الامتصاص بلا لمعان، لا يسد المسام.'},
+ {id:6,name:'واقي شمس SPF50+ بدون رائحة',brand:'صن شيلد',cat:'sun',role:'sunscreen',time:'صباحاً',price:22000,old:26000,rate:4.9,rv:633,size:'50 مل',color:'#fb923c',shape:'tube',tag:'خصم',types:['dry','normal','sensitive','combo'],concerns:['sun','spots','sensitive'],ing:['فلاتر UVA/UVB واسعة الطيف','أكسيد الزنك','فيتامين E'],use:'ضعي ملعقتين صغيرتين على الوجه والرقبة قبل الخروج بـ 15 دقيقة، وأعيدي كل ساعتين عند التعرض المباشر.',desc:'حماية عالية من الشمس بتركيبة لطيفة مناسبة للبشرة الحساسة.'},
+ {id:7,name:'واقي شمس سائل مطفي SPF50',brand:'صن شيلد',cat:'sun',role:'sunscreen',time:'صباحاً',price:24000,rate:4.7,rv:355,size:'50 مل',color:'#facc15',shape:'tube',types:['oily','combo'],concerns:['sun','acne'],ing:['فلاتر واسعة الطيف','سيليكا ماتّينغ','نياسيناميد'],use:'كالسابق: كمية كافية على الوجه صباحاً قبل الخروج.',desc:'ملمس مائي خفيف بإطلالة مطفية، يناسب الأسفل المكياج.'},
+ {id:8,name:'سيروم نياسيناميد 10% + زنك',brand:'كلير سكين',cat:'skin',role:'treatment',time:'صباحاً ومساءً',price:21000,rate:4.6,rv:476,size:'30 مل',color:'#14b8a6',shape:'dropper',tag:'الأكثر طلباً',types:['oily','combo','normal'],concerns:['acne','pores','spots'],ing:['نياسيناميد 10%','زنك PCA'],use:'3-4 قطرات على بشرة نظيفة، صباحاً أو مساءً قبل المرطب.',desc:'يضبط الدهون ويصغّر مظهر المسام ويخفف آثار الحبوب.'},
+ {id:9,name:'كريم ريتينول 0.3% الليلي',brand:'ديرما لايف',cat:'skin',role:'treatment',time:'مساءً',price:32000,rate:4.7,rv:241,size:'30 مل',color:'#ec4899',shape:'jar',types:['normal','dry','combo'],concerns:['wrinkles','spots'],ing:['ريتينول 0.3%','ببتيدات','سكوالين'],use:'مساءً فقط، بكمية بحجم حبة البازلاء، ابدئي مرتين أسبوعياً ثم زيدي تدريجياً. لا يُستخدم أثناء الحمل.',desc:'يحفّز تجدد الخلايا ويقلل الخطوط الدقيقة ويحسن الملمس.'},
+ {id:10,name:'كريم مهدئ للبشرة الحساسة',brand:'ديرما لايف',cat:'skin',role:'moisturizer',price:19500,rate:4.8,rv:329,size:'40 مل',color:'#f9a8d4',shape:'tube',types:['sensitive','dry'],concerns:['sensitive','redness','dryness'],ing:['سنتيلا آسياتيكا','بانثينول 5%','ألانتوين'],use:'ضعيه عند الحاجة على المناطق المتهيجة وبعد التنظيف.',desc:'يهدّئ الاحمرار ويقوي الحاجز الواقي للبشرة.'},
+ {id:11,name:'شامبو مضاد للقشرة بالزنك',brand:'هير كير',cat:'hair',price:14000,rate:4.5,rv:260,size:'250 مل',color:'#3b82f6',shape:'bottle',types:ALL,concerns:['dandruff'],ing:['زنك بيريثيون','حمض الساليسيليك','منثول'],use:'دلّكي فروة الرأس المبللة، اتركيه دقيقتين ثم اشطفي. مرتين أسبوعياً.',desc:'يتحكم بالقشرة والحكة ويمنح فروة الرأس انتعاشاً.'},
+ {id:12,name:'سيروم تكثيف الشعر بالبيوتين والكافيين',brand:'هير كير',cat:'hair',price:26000,old:30000,rate:4.4,rv:174,size:'60 مل',color:'#8b5cf6',shape:'dropper',tag:'خصم',types:ALL,concerns:['hairloss'],ing:['بيوتين','كافيين','ببتيدات نحاسية','روزماري'],use:'ضعي 10-15 قطرة على فروة الرأس الجافة ودلّكي برفق مساءً. استمري 3 أشهر على الأقل.',desc:'يغذي البصيلات ويقلل التساقط ويدعم نمو شعر أكثر كثافة.'},
+ {id:13,name:'ماسك إصلاح الشعر بالكيراتين',brand:'هير كير',cat:'hair',price:17500,rate:4.7,rv:305,size:'300 مل',color:'#f43f5e',shape:'jar',types:ALL,concerns:['damaged'],ing:['كيراتين نباتي','زبدة الشيا','بروتين الحرير'],use:'بعد الشامبو وزّعيه على الأطوال لـ 5-10 دقائق ثم اشطفي، مرة أسبوعياً.',desc:'ترميم عميق للشعر التالف والمعالَج حرارياً أو كيميائياً.'},
+ {id:14,name:'زيت الأرغان للشعر',brand:'هير كير',cat:'hair',price:15000,rate:4.6,rv:221,size:'100 مل',color:'#d97706',shape:'pump',types:ALL,concerns:['damaged','frizz'],ing:['زيت الأرغان المغربي','فيتامين E'],use:'بضع قطرات على الأطراف والشعر شبه الجاف لتقليل الهيشان.',desc:'لمعان وانسيابية وتغذية دون إثقال الشعر.'},
+ {id:15,name:'كريم أساس خفيف SPF15',brand:'جلو',cat:'makeup',price:20000,rate:4.4,rv:143,size:'30 مل',color:'#e8b89a',shape:'pump',types:['normal','dry','combo'],concerns:['coverage'],ing:['حمض الهيالورونيك','فلاتر SPF15'],use:'وزّعيه بالإسفنجة أو الفرشاة على بشرة مرطبة.',desc:'تغطية متوسطة قابلة للبناء بإطلالة طبيعية مشرقة.'},
+ {id:16,name:'أحمر شفاه مرطب',brand:'جلو',cat:'makeup',price:9000,rate:4.5,rv:402,size:'3.5 غ',color:'#be123c',shape:'lipstick',tag:'جديد',types:ALL,concerns:['lips'],ing:['زبدة الشيا','فيتامين E','زيت الجوجوبا'],use:'ضعيه مباشرة على الشفاه، ويمكن تثبيته بمنديل رقيق.',desc:'لون غني بملمس كريمي يرطب الشفاه طوال اليوم.'},
+ {id:17,name:'كونسيلر عالي التغطية',brand:'جلو',cat:'makeup',price:11000,rate:4.3,rv:119,size:'6 مل',color:'#d6a07a',shape:'tube',types:['normal','combo','oily','dry'],concerns:['coverage'],ing:['كافيين','فيتامين C'],use:'ضعي نقاطاً تحت العين وعلى العيوب ثم امزجي بالإصبع أو الإسفنجة.',desc:'يخفي الهالات والعيوب بتغطية عالية دون تشقق.'},
+ {id:18,name:'لوشن الجسم بزبدة الشيا',brand:'ديرما لايف',cat:'body',price:14500,rate:4.7,rv:288,size:'400 مل',color:'#fbbf24',shape:'pump',types:ALL,concerns:['dryness'],ing:['زبدة الشيا','غليسيرين','يوريا 5%'],use:'دلّكيه على الجسم بعد الاستحمام وعلى الجلد شبه الرطب.',desc:'ترطيب مكثف يدوم طويلاً ويلين الجلد الخشن.'},
+ {id:19,name:'مقشر الجسم بالسكر',brand:'ديرما لايف',cat:'body',price:12500,rate:4.4,rv:97,size:'250 غ',color:'#fb7185',shape:'jar',types:ALL,concerns:['dryness'],ing:['سكر','زيت اللوز الحلو','فيتامين E'],use:'دلّكي بحركات دائرية على جلد مبلل، مرة أسبوعياً، ثم اشطفي.',desc:'تقشير لطيف يزيل الجلد الميت ويمنح نعومة فورية.'}
+];
+const Q=[
+ {q:'كيف تشعرين ببشرتك بعد غسلها بنصف ساعة؟',o:[['شدّ وجفاف','dry'],['لمعان ودهون على كامل الوجه','oily'],['دهون في المنطقة T فقط','combo'],['مرتاحة ومتوازنة','normal'],['احمرار أو لسع بسهولة','sensitive']]},
+ {q:'ما أبرز مشكلة تريدين معالجتها؟',o:[['حبوب ومسام واسعة','acne'],['بقع وتصبغات وبهتان','spots'],['خطوط دقيقة وتجاعيد','wrinkles'],['جفاف وخشونة','dryness'],['احمرار وحساسية','sensitive'],['لا شيء محدد، أريد المحافظة فقط','none']]},
+ {q:'كم تتعرضين لأشعة الشمس يومياً؟',o:[['قليلاً (داخل المنزل غالباً)','low'],['متوسط (تنقل يومي)','mid'],['كثيراً (خارج المنزل لساعات)','high']]},
+ {q:'ما مشكلة شعرك الأساسية؟',o:[['تساقط','hairloss'],['قشرة أو حكة','dandruff'],['تلف وجفاف وهيشان','damaged'],['لا مشكلة','none']]}
+];
+const TIPS=[
+ ['☀️','واقي الشمس كل يوم','هو أهم خطوة مضادة للشيخوخة والتصبغات، حتى في الأيام الغائمة.'],
+ ['💧','رطّبي بشرتك بعد الغسل','ضعي المرطب خلال دقائق من التنظيف لحبس الرطوبة.'],
+ ['🧪','جرّبي منتجاً واحداً جديداً كل مرة','اختبري على الساعد أولاً وانتظري 24 ساعة قبل استخدامه على الوجه.']
+];
+const GUIDE=[
+ ['فيتامين C','مضاد أكسدة يفتّح البقع ويعزز الإشراق. الأفضل صباحاً قبل واقي الشمس. قد يسبب وخزاً خفيفاً في البدايات.'],
+ ['الريتينول','أقوى المكونات المضادة للتجاعيد ويحسّن الملمس والحبوب. يُستخدم مساءً فقط، يبدأ بتركيز منخفض، ويستلزم واقي شمس يومياً. يُمنع أثناء الحمل والرضاعة.'],
+ ['نياسيناميد (فيتامين B3)','يضبط الدهون، يصغّر مظهر المسام، ويقوي حاجز البشرة. مناسب لمعظم الأنواع ويُستخدم صباحاً أو مساءً.'],
+ ['حمض الهيالورونيك','يجذب الماء ويرطب بعمق. ضعيه على بشرة رطبة قليلاً ليعطي أفضل نتيجة.'],
+ ['الأحماض AHA / BHA','AHA (كالغليكوليك) تقشّر السطح وتفتّح الجلد، وBHA (الساليسيليك) تخترق المسام وتناسب الحبوب. ابدئي مرتين أسبوعياً.'],
+ ['السيراميد','دهون طبيعية تعيد بناء الحاجز الواقي، ممتازة للجفاف والحساسية.'],
+ ['بيروكسيد البنزويل','يقتل بكتيريا حب الشباب. قد يسبب جفافاً وتقشراً، ويبيّض الأقمشة، فابدئي بتركيز 2.5%.'],
+ ['البيوتين والكافيين للشعر','يدعمان صحة البصيلة وكثافة الشعر، وتظهر النتائج عادة بعد 3 أشهر من الانتظام.']
+];
+const ING=['ريتينول','فيتامين C','AHA / BHA','نياسيناميد','بيروكسيد البنزويل','حمض الهيالورونيك','سيراميد'];
+const COMBO={
+ 'ريتينول|AHA / BHA':['avoid','لا يُنصح بدمجهما في نفس الليلة','الجمع يزيد الجفاف والتهيج والتقشر. استخدمي كلاً منهما في ليلة مختلفة.'],
+ 'ريتينول|فيتامين C':['caution','ممكن بحذر','الأفضل فيتامين C صباحاً والريتينول مساءً لتجنب التهيج.'],
+ 'ريتينول|بيروكسيد البنزويل':['avoid','تجنّبي الجمع','البنزويل قد يعطّل الريتينول ويزيد التهيج. بدّلي بينهما أو استشيري الصيدلي.'],
+ 'فيتامين C|AHA / BHA':['caution','ممكن بحذر','قد يسبب تهيجاً للبشرة الحساسة. استخدمي الأحماض مساءً وفيتامين C صباحاً.'],
+ 'AHA / BHA|بيروكسيد البنزويل':['caution','قد يسبب جفافاً شديداً','لا تجمعيهما في الروتين نفسه إلا بإشراف مختص.'],
+ 'فيتامين C|بيروكسيد البنزويل':['caution','الأفضل فصلهما','البنزويل قد يؤكسد فيتامين C ويُضعف فعاليته. بدّلي بين الصباح والمساء.']
+};
+const COUPON={code:'NADRA10',pct:10};
+const DELIVERY=3000, FREE_OVER=50000;
+
+/* ============ الحالة ============ */
+let S={cart:{},favs:[],orders:[],theme:'light',quiz:null,coupon:false};
+try{const r=localStorage.getItem('nadra_state');if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+function save(){try{localStorage.setItem('nadra_state',JSON.stringify(S))}catch(e){}}
+let UI={view:'home',cat:'all',q:'',sort:'pop',qi:0,answers:[]};
+const $=s=>document.querySelector(s);
+const fmt=n=>n.toLocaleString('en-US')+' د.ع';
+const byId=id=>P.find(p=>p.id===+id);
+
+/* ============ رسم العبوات ============ */
+function bottle(p,big){
+  const c=p.color,s=big?1.5:1;
+  const w=70*s,h=100*s;
+  const shades={
+    dropper:`<rect x="30" y="38" width="40" height="56" rx="9" fill="${c}"/><rect x="38" y="22" width="24" height="18" rx="3" fill="#2d3748"/><path d="M42 22v-10a8 8 0 0 1 16 0v10z" fill="#4a5568"/><rect x="36" y="56" width="28" height="22" rx="4" fill="#fff" opacity=".85"/>`,
+    tube:`<path d="M30 14h40l5 70H25z" fill="${c}"/><rect x="28" y="84" width="44" height="10" rx="2" fill="#2d3748"/><rect x="36" y="42" width="28" height="26" rx="4" fill="#fff" opacity=".85"/>`,
+    jar:`<rect x="20" y="44" width="60" height="46" rx="12" fill="${c}"/><rect x="18" y="30" width="64" height="18" rx="6" fill="#2d3748"/><rect x="32" y="58" width="36" height="20" rx="4" fill="#fff" opacity=".85"/>`,
+    bottle:`<rect x="28" y="30" width="44" height="66" rx="10" fill="${c}"/><rect x="38" y="16" width="24" height="16" rx="3" fill="#2d3748"/><rect x="34" y="52" width="32" height="26" rx="4" fill="#fff" opacity=".85"/>`,
+    pump:`<rect x="28" y="38" width="44" height="58" rx="10" fill="${c}"/><rect x="44" y="18" width="12" height="22" fill="#2d3748"/><rect x="36" y="12" width="28" height="9" rx="4" fill="#2d3748"/><rect x="34" y="56" width="32" height="24" rx="4" fill="#fff" opacity=".85"/>`,
+    lipstick:`<rect x="32" y="52" width="36" height="42" rx="5" fill="#2d3748"/><rect x="34" y="34" width="32" height="20" fill="#d4af37"/><path d="M36 34V20q14-14 28 0v14z" fill="${c}"/>`
+  };
+  return `<svg width="${w}" height="${h}" viewBox="0 0 100 110" aria-hidden="true">${shades[p.shape]||shades.jar}<ellipse cx="50" cy="104" rx="30" ry="4" fill="#000" opacity=".1"/></svg>`;
+}
+const bg=p=>`background:linear-gradient(145deg,${p.color}33,${p.color}11)`;
+
+/* ============ أدوات ============ */
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),1800)}
+function cartCount(){return Object.values(S.cart).reduce((a,b)=>a+b,0)}
+function cartTotals(){
+  let sub=0;for(const id in S.cart){const p=byId(id);if(p)sub+=p.price*S.cart[id]}
+  const disc=S.coupon?Math.round(sub*COUPON.pct/100):0;
+  const del=sub===0?0:(sub-disc>=FREE_OVER?0:DELIVERY);
+  return{sub,disc,del,total:sub-disc+del};
+}
+function stars(r){return '★'.repeat(Math.round(r))+'☆'.repeat(5-Math.round(r))}
+function isFav(id){return S.favs.includes(id)}
+function toggleFav(id,ev){
+  if(ev)ev.stopPropagation();
+  const i=S.favs.indexOf(id);
+  if(i>-1){S.favs.splice(i,1);toast('أُزيل من المفضلة')}else{S.favs.push(id);toast('أُضيف إلى المفضلة ❤️')}
+  save();refreshLists();
+}
+function addCart(id,q=1,ev){
+  if(ev)ev.stopPropagation();
+  S.cart[id]=(S.cart[id]||0)+q;save();updateBadge();toast('أُضيف إلى السلة 🛒');
+  if(UI.view==='cart')renderCart();
+}
+function updateBadge(){const n=cartCount(),b=$('#navBadge');b.style.display=n?'grid':'none';b.textContent=n}
+function refreshLists(){
+  ['home','shop','favs'].forEach(v=>{if(UI.view===v)render(v)});
+  const sh=$('#sheet');if(sh.classList.contains('show')&&sh.dataset.pid)openProduct(+sh.dataset.pid,true);
+}
+
+/* ============ بطاقة منتج ============ */
+function card(p){
+  return `<div class="pcard">
+    <div class="pimg" style="${bg(p)}" onclick="openProduct(${p.id})">
+      ${p.tag?`<span class="tag">${p.tag}</span>`:''}
+      <button class="fav ${isFav(p.id)?'on':''}" onclick="toggleFav(${p.id},event)" aria-label="مفضلة">${isFav(p.id)?'♥':'♡'}</button>
+      ${bottle(p)}
+    </div>
+    <div class="pbody">
+      <div class="pbrand">${p.brand} · ${p.size}</div>
+      <div class="pname" onclick="openProduct(${p.id})">${p.name}</div>
+      <div class="rate">${stars(p.rate)} <small>(${p.rv})</small></div>
+      <div class="price"><b>${fmt(p.price)}</b>${p.old?`<s>${fmt(p.old)}</s>`:''}</div>
+      <button class="add" onclick="addCart(${p.id},1,event)">+ أضف للسلة</button>
+    </div>
+  </div>`;
+}
+
+/* ============ الشريط العلوي ============ */
+const TITLES={shop:'المتجر',quiz:'تحليل البشرة',cart:'سلة التسوق',more:'المزيد',favs:'المفضلة',orders:'طلباتي',guide:'دليل المكونات',combo:'فحص توافق المكونات'};
+const SUB=['favs','orders','guide','combo'];
+function renderTop(){
+  const v=UI.view,t=$('#topbar');
+  if(v==='home'){
+    t.innerHTML=`<div class="logo"><i>🌿</i><b>نضارة</b></div>
+    <button class="icon-btn" onclick="go('favs')" aria-label="المفضلة">♡${S.favs.length?`<i class="badge">${S.favs.length}</i>`:''}</button>
+    <button class="icon-btn" onclick="toggleTheme()" aria-label="الوضع">${S.theme==='dark'?'☀️':'🌙'}</button>`;
+  }else{
+    t.innerHTML=`${SUB.includes(v)?`<button class="icon-btn" onclick="go('more')" aria-label="رجوع">→</button>`:''}<h1>${TITLES[v]}</h1>`;
+  }
+}
+
+/* ============ التنقل ============ */
+function go(v){
+  UI.view=v;
+  document.querySelectorAll('.view').forEach(e=>e.classList.toggle('active',e.id==='v-'+v));
+  const nv=SUB.includes(v)?'more':v;
+  document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===nv));
+  renderTop();render(v);window.scrollTo({top:0});
+}
+document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>go(b.dataset.v));
+function render(v){({home:renderHome,shop:renderShop,quiz:renderQuiz,cart:renderCart,more:renderMore,favs:renderFavs,orders:renderOrders,guide:renderGuide,combo:renderCombo})[v]()}
+function toggleTheme(){
+  S.theme=S.theme==='dark'?'light':'dark';
+  document.documentElement.dataset.theme=S.theme;
+  document.querySelector('meta[name=theme-color]').content=S.theme==='dark'?'#0d1514':'#0f766e';
+  save();renderTop();if(UI.view==='more')renderMore();
+}
+
+/* ============ الرئيسية ============ */
+function renderHome(){
+  const best=[...P].sort((a,b)=>b.rv-a.rv).slice(0,8);
+  const offers=P.filter(p=>p.old);
+  $('#v-home').innerHTML=`
+  <div class="search"><span>🔍</span><input id="hs" placeholder="ابحثي عن سيروم، شامبو، واقي شمس…" onkeydown="if(event.key==='Enter')homeSearch()"></div>
+  <div class="hero">
+    <h2>بشرة وشعر أجمل<br>بتوصية صيدلانية موثوقة</h2>
+    <p>منتجات فعّالة مختارة بعناية، مع تحليل مجاني لنوع بشرتك وروتين مخصص لك.</p>
+    <button class="btn light" onclick="go('quiz')">ابدئي تحليل البشرة ✨</button>
+  </div>
+  <div class="sec-title"><h3>التصنيفات</h3></div>
+  <div class="cats">${CATS.map(c=>`<button class="cat" onclick="UI.cat='${c.id}';go('shop')"><span>${c.ic}</span>${c.name}</button>`).join('')}</div>
+  <div class="sec-title"><h3>🔥 الأكثر مبيعاً</h3><a onclick="UI.cat='all';go('shop')">عرض الكل</a></div>
+  <div class="hscroll">${best.map(card).join('')}</div>
+  <div class="sec-title"><h3>🏷️ عروض خاصة</h3></div>
+  <div class="hscroll">${offers.map(card).join('')}</div>
+  <div class="banner"><i>🎁</i><div><b>كوبون ترحيبي: ${COUPON.code}</b><p>خصم ${COUPON.pct}% على طلبك الأول. توصيل مجاني فوق ${fmt(FREE_OVER)}.</p></div></div>
+  <div class="sec-title"><h3>نصائح الخبراء</h3></div>
+  <div class="tips">${TIPS.map(t=>`<div class="tip"><i>${t[0]}</i><div><b>${t[1]}</b><p>${t[2]}</p></div></div>`).join('')}</div>
+  <p class="disc">المحتوى لأغراض توعوية ولا يغني عن استشارة الطبيب أو الصيدلي، خصوصاً عند الحمل أو الأمراض الجلدية.</p>`;
+}
+function homeSearch(){UI.q=$('#hs').value.trim();UI.cat='all';go('shop')}
+
+/* ============ المتجر ============ */
+function renderShop(){
+  $('#v-shop').innerHTML=`
+  <div class="search"><span>🔍</span><input id="sq" placeholder="ابحثي عن منتج أو مكوّن…" value="${UI.q}" oninput="UI.q=this.value.trim();renderList()"></div>
+  <div class="chips">
+    <button class="chip ${UI.cat==='all'?'on':''}" onclick="setCat('all')">الكل</button>
+    ${CATS.map(c=>`<button class="chip ${UI.cat===c.id?'on':''}" onclick="setCat('${c.id}')">${c.ic} ${c.name}</button>`).join('')}
+  </div>
+  <div class="toolbar"><span id="cnt"></span>
+    <select onchange="UI.sort=this.value;renderList()">
+      <option value="pop" ${UI.sort==='pop'?'selected':''}>الأكثر شعبية</option>
+      <option value="low" ${UI.sort==='low'?'selected':''}>السعر: الأقل</option>
+      <option value="high" ${UI.sort==='high'?'selected':''}>السعر: الأعلى</option>
+      <option value="rate" ${UI.sort==='rate'?'selected':''}>الأعلى تقييماً</option>
+    </select></div>
+  <div class="grid" id="plist"></div>`;
+  renderList();
+}
+function setCat(c){UI.cat=c;renderShop()}
+function renderList(){
+  let l=P.filter(p=>(UI.cat==='all'||p.cat===UI.cat)&&(!UI.q||(p.name+p.brand+p.ing.join(' ')).includes(UI.q)));
+  const s={pop:(a,b)=>b.rv-a.rv,low:(a,b)=>a.price-b.price,high:(a,b)=>b.price-a.price,rate:(a,b)=>b.rate-a.rate}[UI.sort];
+  l.sort(s);
+  $('#cnt').textContent=l.length+' منتج';
+  $('#plist').innerHTML=l.length?l.map(card).join(''):`<div class="empty" style="grid-column:1/-1"><i>🔎</i>لا توجد نتائج مطابقة</div>`;
+}
+
+/* ============ تفاصيل المنتج ============ */
+function openSheet(html,pid){
+  const sh=$('#sheet');sh.innerHTML='<div class="grab"></div>'+html;
+  if(pid)sh.dataset.pid=pid;else delete sh.dataset.pid;
+  sh.classList.add('show');$('#overlay').classList.add('show');
+}
+function closeSheet(){$('#sheet').classList.remove('show');$('#overlay').classList.remove('show')}
+$('#overlay').onclick=closeSheet;
+let detailQty=1;
+function openProduct(id,keep){
+  const p=byId(id);if(!keep)detailQty=1;
+  const rel=P.filter(x=>x.cat===p.cat&&x.id!==p.id).slice(0,3);
+  openSheet(`
+  <div class="sheet-img" style="${bg(p)}">${bottle(p,true)}</div>
+  <div class="pbrand">${p.brand}</div>
+  <h2>${p.name}</h2>
+  <div class="rate" style="margin-top:4px">${stars(p.rate)} <small>${p.rate} (${p.rv} تقييم)</small></div>
+  <div class="meta"><span>${p.size}</span>${p.time?`<span>⏰ ${p.time}</span>`:''}${p.cat==='skin'||p.cat==='sun'?p.types.length<5?`<span>${p.types.map(t=>TYPE_NAME[t]).join('، ')}</span>`:'<span>كل الأنواع</span>':''}</div>
+  <p>${p.desc}</p>
+  <h4>المكونات الفعّالة</h4><ul>${p.ing.map(i=>`<li>${i}</li>`).join('')}</ul>
+  <h4>طريقة الاستخدام</h4><p>${p.use}</p>
+  ${rel.length?`<h4>منتجات مشابهة</h4><div style="display:flex;gap:8px">${rel.map(r=>`<button onclick="openProduct(${r.id})" style="flex:1;border-radius:14px;padding:8px 4px;font-size:11.5px;font-weight:700;${bg(r)}">${bottle({...r},false).replace('width="70"','width="44"').replace('height="100"','height="62"')}<br>${r.name.slice(0,22)}…</button>`).join('')}</div>`:''}
+  <div class="sheet-foot">
+    <div class="qty"><button onclick="detailQty=Math.min(9,detailQty+1);openProduct(${p.id},true)">+</button><b>${detailQty}</b><button onclick="detailQty=Math.max(1,detailQty-1);openProduct(${p.id},true)">−</button></div>
+    <button class="btn" onclick="addCart(${p.id},detailQty);closeSheet()">أضف • ${fmt(p.price*detailQty)}</button>
+    <button class="icon-btn" style="width:46px;height:46px;${isFav(p.id)?'color:var(--accent)':''}" onclick="toggleFav(${p.id})">${isFav(p.id)?'♥':'♡'}</button>
+  </div>`,p.id);
+}
+
+/* ============ السلة ============ */
+function renderCart(){
+  const ids=Object.keys(S.cart);
+  if(!ids.length){$('#v-cart').innerHTML=`<div class="empty"><i>🛒</i><b>سلتك فارغة</b><p style="margin:6px 0 16px">أضيفي منتجاتك المفضلة لتبدئي</p><button class="btn" onclick="go('shop')">تصفّحي المتجر</button></div>`;return}
+  const t=cartTotals();
+  $('#v-cart').innerHTML=ids.map(id=>{const p=byId(id);return `
+    <div class="citem">
+      <div class="cthumb" style="${bg(p)}">${bottle(p).replace('width="70"','width="40"').replace('height="100"','height="58"')}</div>
+      <div class="cinfo"><b>${p.name}</b><small>${fmt(p.price*S.cart[id])}</small></div>
+      <div class="qty"><button onclick="chg(${id},1)">+</button><b>${S.cart[id]}</b><button onclick="chg(${id},-1)">−</button></div>
+    </div>`}).join('')+`
+  <div class="summary">
+    <div class="coupon"><input id="cp" placeholder="كود الخصم" value="${S.coupon?COUPON.code:''}" ${S.coupon?'disabled':''}><button class="btn ghost" onclick="applyCoupon()">${S.coupon?'إلغاء':'تطبيق'}</button></div>
+    <div style="height:10px"></div>
+    <div class="row"><span>المجموع</span><span>${fmt(t.sub)}</span></div>
+    ${t.disc?`<div class="row" style="color:var(--ok)"><span>خصم الكوبون</span><span>−${fmt(t.disc)}</span></div>`:''}
+    <div class="row"><span>التوصيل</span><span>${t.del?fmt(t.del):'مجاني'}</span></div>
+    ${t.del&&t.sub?`<div class="row" style="font-size:12px"><span>أضيفي ${fmt(FREE_OVER-(t.sub-t.disc))} للحصول على توصيل مجاني</span></div>`:''}
+    <div class="row total"><span>الإجمالي</span><span>${fmt(t.total)}</span></div>
+    <button class="btn block" style="margin-top:12px" onclick="checkout()">إتمام الطلب</button>
+  </div>`;
+}
+function chg(id,d){
+  S.cart[id]=(S.cart[id]||0)+d;if(S.cart[id]<=0)delete S.cart[id];
+  save();updateBadge();renderCart();
+}
+function applyCoupon(){
+  if(S.coupon){S.coupon=false;save();renderCart();return}
+  const v=$('#cp').value.trim().toUpperCase();
+  if(v===COUPON.code){S.coupon=true;save();toast('تم تطبيق الخصم 🎉');renderCart()}else toast('الكود غير صحيح');
+}
+function checkout(){
+  const t=cartTotals();
+  openSheet(`<h2>بيانات التوصيل</h2><p style="margin-bottom:14px">الدفع نقداً عند الاستلام</p>
+  <div class="field"><label>الاسم الكامل</label><input id="f-n" placeholder="الاسم"></div>
+  <div class="field"><label>رقم الهاتف</label><input id="f-p" type="tel" inputmode="tel" placeholder="07XXXXXXXXX"></div>
+  <div class="field"><label>المحافظة</label><select id="f-c" class="field" style="width:100%;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:11px 12px;font-size:14px">${['بغداد','البصرة','أربيل','النجف','كربلاء','الموصل','السليمانية','كركوك','أخرى'].map(c=>`<option>${c}</option>`).join('')}</select></div>
+  <div class="field"><label>العنوان التفصيلي</label><textarea id="f-a" rows="2" placeholder="المنطقة، الشارع، أقرب نقطة دالة"></textarea></div>
+  <div class="row total"><span>الإجمالي</span><span>${fmt(t.total)}</span></div>
+  <button class="btn block" style="margin-top:12px" onclick="placeOrder()">تأكيد الطلب</button>`);
+}
+function placeOrder(){
+  const n=$('#f-n').value.trim(),ph=$('#f-p').value.trim(),a=$('#f-a').value.trim(),c=$('#f-c').value;
+  if(n.length<3)return toast('أدخلي الاسم الكامل');
+  if(!/^[0-9+\s-]{9,15}$/.test(ph))return toast('رقم الهاتف غير صالح');
+  if(a.length<5)return toast('أدخلي العنوان بالتفصيل');
+  const t=cartTotals(),id='ND'+Date.now().toString().slice(-6);
+  S.orders.unshift({id,date:new Date().toLocaleDateString('ar-IQ'),items:Object.entries(S.cart).map(([k,q])=>({id:+k,q})),total:t.total,name:n,city:c,addr:a});
+  S.cart={};S.coupon=false;save();updateBadge();
+  openSheet(`<div class="success"><div class="big">🎉</div><h2>تم استلام طلبك!</h2><p>رقم الطلب <b style="color:var(--brand)">#${id}</b><br>سنتواصل معك على ${ph} لتأكيد التوصيل خلال 24-48 ساعة.</p>
+  <button class="btn block" style="margin-top:16px" onclick="closeSheet();go('orders')">متابعة طلباتي</button></div>`);
+  renderCart();
+}
+
+/* ============ تحليل البشرة ============ */
+function renderQuiz(){
+  const box=$('#v-quiz');
+  if(S.quiz&&UI.qi===0&&!UI.retake){return showResult()}
+  if(UI.qi>=Q.length){return finishQuiz()}
+  const q=Q[UI.qi];
+  box.innerHTML=`<div class="qcard">
+    <div class="progress"><div style="width:${(UI.qi/Q.length)*100}%"></div></div>
+    <small style="color:var(--muted)">السؤال ${UI.qi+1} من ${Q.length}</small>
+    <h3>${q.q}</h3>
+    ${q.o.map((o,i)=>`<button class="opt" onclick="answer(${i})">${o[0]}</button>`).join('')}
+    ${UI.qi>0?`<button class="btn ghost block" onclick="UI.qi--;UI.answers.pop();renderQuiz()">السابق</button>`:''}
+  </div>`;
+}
+function answer(i){UI.answers[UI.qi]=Q[UI.qi].o[i][1];UI.qi++;renderQuiz()}
+function finishQuiz(){
+  const a=UI.answers;
+  S.quiz={type:a[0],concern:a[1],sun:a[2],hair:a[3]};
+  UI.retake=false;UI.qi=0;UI.answers=[];save();showResult();
+}
+function pick(role,type,concern){
+  const l=P.filter(p=>p.role===role&&p.types.includes(type));
+  return l.find(p=>p.concerns.includes(concern))||l[0]||P.find(p=>p.role===role);
+}
+function showResult(){
+  const r=S.quiz,type=r.type;
+  const cn=r.concern==='sensitive'?'sensitive':r.concern;
+  const cleanser=pick('cleanser',type,cn);
+  let treat;
+  if(r.concern==='none')treat=pick('treatment',type,'spots');
+  else if(r.concern==='dryness'||r.concern==='sensitive')treat=P.find(p=>p.id===10);
+  else treat=P.filter(p=>p.role==='treatment'&&p.types.includes(type)&&p.concerns.includes(r.concern))[0]||pick('treatment',type,r.concern);
+  const moist=(r.concern==='sensitive'?P.find(p=>p.id===10):pick('moisturizer',type,cn));
+  const sun=pick('sunscreen',type,'sun');
+  const night=(r.concern==='wrinkles'&&type!=='sensitive')?P.find(p=>p.id===9):null;
+  const hair=r.hair&&r.hair!=='none'?P.filter(p=>p.cat==='hair'&&p.concerns.includes(r.hair)):[];
+  const desc={dry:'تفتقر بشرتك للزيوت والماء، فتحتاج ترطيباً مكثفاً وتنظيفاً لطيفاً.',oily:'بشرتك تفرز دهوناً زائدة، فتحتاج منتجات خفيفة تنظّم الدهون دون تجفيف.',combo:'منطقة T دهنية والخدود عادية أو جافة، فالموازنة هي المفتاح.',normal:'بشرتك متوازنة، والهدف الحفاظ عليها والوقاية.',sensitive:'بشرتك سريعة التهيج، فالأولوية للمكونات المهدئة وتجنب العطور والأحماض القوية.'}[type];
+  const icon={dry:'🏜️',oily:'💧',combo:'⚖️',normal:'🌸',sensitive:'🌿'}[type];
+  const step=(n,l,p)=>p?`<div class="step"><em>${n}</em><div>${l}<small>${p.name}</small></div><button onclick="openProduct(${p.id})">عرض</button></div>`:'';
+  const am=[['غسول',cleanser],['علاج مستهدف',treat&&treat.id!==9?treat:null],['مرطب',moist],['واقي شمس',sun]].filter(x=>x[1]);
+  const pm=[['غسول',cleanser],night?['ريتينول ليلي',night]:['علاج مستهدف',treat&&treat.time!=='صباحاً'?treat:null],['مرطب',moist]].filter(x=>x[1]);
+  const all=[...new Set([...am,...pm].map(x=>x[1].id).concat(hair.map(h=>h.id)))];
+  const sunNote=r.sun==='high'?'<p style="margin-top:8px;color:var(--warn);font-size:12.5px">⚠️ تعرضك للشمس مرتفع: أعيدي وضع واقي الشمس كل ساعتين.</p>':'';
+  $('#v-quiz').innerHTML=`
+  <div class="qcard"><div class="result-top"><div class="big">${icon}</div><small style="color:var(--muted)">نتيجة تحليلك</small>
+    <h2>بشرة ${TYPE_NAME[type]}</h2><p>${desc}</p>${sunNote}</div></div>
+  <div class="routine"><h4>☀️ روتين الصباح</h4>${am.map((x,i)=>step(i+1,x[0],x[1])).join('')}</div>
+  <div class="routine"><h4>🌙 روتين المساء</h4>${pm.map((x,i)=>step(i+1,x[0],x[1])).join('')}</div>
+  ${hair.length?`<div class="routine"><h4>💇‍♀️ للعناية بالشعر</h4>${hair.map((h,i)=>step(i+1,'منتج موصى به',h)).join('')}</div>`:''}
+  <button class="btn block" style="margin-top:14px" onclick="addAll([${all}])">🛒 أضف الروتين كاملاً للسلة</button>
+  <button class="btn ghost block" style="margin-top:8px" onclick="UI.retake=true;UI.qi=0;UI.answers=[];renderQuiz()">إعادة التحليل</button>
+  <p class="disc">التوصيات استرشادية. في حال وجود حب شباب شديد أو التهاب مزمن، راجعي طبيب الجلدية.</p>`;
+}
+function addAll(ids){ids.forEach(i=>S.cart[i]=(S.cart[i]||0)+1);save();updateBadge();toast('أُضيفت '+ids.length+' منتجات للسلة 🛒')}
+
+/* ============ المزيد ============ */
+function renderMore(){
+  $('#v-more').innerHTML=`<div class="menu">
+    <button class="mi" onclick="go('favs')"><i>❤️</i><span>المفضلة</span><small>${S.favs.length}</small></button>
+    <button class="mi" onclick="go('orders')"><i>📦</i><span>طلباتي</span><small>${S.orders.length}</small></button>
+    <button class="mi" onclick="go('guide')"><i>🧪</i><span>دليل المكونات</span></button>
+    <button class="mi" onclick="go('combo')"><i>⚗️</i><span>فحص توافق المكونات</span></button>
+    <button class="mi" onclick="toggleTheme()"><i>${S.theme==='dark'?'☀️':'🌙'}</i><span>${S.theme==='dark'?'الوضع الفاتح':'الوضع الليلي'}</span></button>
+  </div>
+  <div class="menu" style="margin-top:14px">
+    <button class="mi" onclick="if(confirm('سيتم مسح السلة والمفضلة والطلبات. متأكدة؟')){S={cart:{},favs:[],orders:[],theme:S.theme,quiz:null,coupon:false};save();updateBadge();renderMore();toast('تم مسح البيانات')}"><i>🗑️</i><span style="color:var(--danger)">مسح بياناتي</span></button>
+  </div>
+  <p class="disc">نضارة — تطبيق تجريبي لعرض منتجات العناية بالبشرة والشعر والتجميل.<br>المحتوى توعوي ولا يغني عن استشارة مختص.</p>`;
+}
+function renderFavs(){
+  const l=S.favs.map(byId).filter(Boolean);
+  $('#v-favs').innerHTML=l.length?`<div class="grid">${l.map(card).join('')}</div>`:`<div class="empty"><i>💝</i>لا توجد منتجات في المفضلة بعد</div>`;
+}
+function renderOrders(){
+  $('#v-orders').innerHTML=S.orders.length?S.orders.map(o=>`
+  <div class="order"><div class="h"><span>#${o.id}</span><span class="st">قيد التجهيز</span></div>
+  <p>${o.date} · ${o.items.reduce((a,b)=>a+b.q,0)} منتجات · <b style="color:var(--brand)">${fmt(o.total)}</b><br>${o.items.map(i=>byId(i.id).name+' ×'+i.q).join('<br>')}<br>📍 ${o.city} - ${o.addr}</p></div>`).join(''):`<div class="empty"><i>📦</i>لا توجد طلبات سابقة</div>`;
+}
+function renderGuide(){
+  $('#v-guide').innerHTML=GUIDE.map((g,i)=>`<div class="acc" id="a${i}"><button onclick="document.getElementById('a${i}').classList.toggle('open')">${g[0]}<span class="ar">⌄</span></button><div>${g[1]}</div></div>`).join('');
+}
+/* ============ فحص التوافق ============ */
+let CB=['ريتينول','AHA / BHA'];
+function renderCombo(){
+  const key=[CB[0],CB[1]];
+  let res=null;
+  if(CB[0]===CB[1])res=['ok','نفس المكوّن','اختاري مكوّنين مختلفين للفحص.'];
+  else res=COMBO[key.join('|')]||COMBO[key.reverse().join('|')]||['ok','متوافقان ✓','لا يوجد تعارض معروف بينهما، ويمكن استخدامهما معاً بأمان.'];
+  const sel=(i)=>`<select onchange="CB[${i}]=this.value;renderCombo()" style="width:100%;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px;font-size:15px">${ING.map(x=>`<option ${CB[i]===x?'selected':''}>${x}</option>`).join('')}</select>`;
+  $('#v-combo').innerHTML=`<p style="color:var(--muted);font-size:13.5px;line-height:1.8;margin-bottom:14px">اختاري مكوّنين لمعرفة ما إذا كان يمكن استخدامهما معاً في الروتين نفسه.</p>
+  <div class="field"><label>المكوّن الأول</label>${sel(0)}</div>
+  <div style="text-align:center;font-size:22px;margin:-4px 0 6px">＋</div>
+  <div class="field"><label>المكوّن الثاني</label>${sel(1)}</div>
+  <div class="combo-res ${res[0]}"><b>${res[0]==='ok'?'✅':res[0]==='caution'?'⚠️':'⛔'} ${res[1]}</b>${res[2]}</div>
+  <p class="disc">إرشادات عامة؛ ابدئي بمنتج واحد جديد في كل مرة.</p>`;
+}
+
+/* ============ تشغيل ============ */
+document.documentElement.dataset.theme=S.theme;
+if(S.theme==='dark')document.querySelector('meta[name=theme-color]').content='#0d1514';
+updateBadge();go('home');
+</script>
+</body>
+</html>
